@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1877F2">
+<title>Verse For My Situation</title>
+<script>
+  /* ===== GITHUB PAGES DEEP-LINK FALLBACK =====
+     GitHub Pages has no server rules, so a direct visit to /about-us lands here.
+     This page sends the visitor to the app shell with the route carried in the
+     hash (#/about-us); app.js then restores the clean address.
+
+     segmentsToKeep:
+       0 = user/organisation site or custom domain  (https://name.github.io/  or  https://yourdomain.com/)
+       1 = project site                              (https://name.github.io/repo-name/)
+  */
+  var segmentsToKeep = 0;
+
+  var l = window.location;
+  var parts = l.pathname.split('/');
+  var base = parts.slice(0, 1 + segmentsToKeep).join('/');
+  var route = parts.slice(1 + segmentsToKeep).join('/');
+  l.replace(l.protocol + '//' + l.host + base + '/#/' + route);
+</script>
+</head>
+<body>
+<noscript><a href="./">Verse For My Situation</a></noscript>
+</body>
+</html>
