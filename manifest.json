@@ -1,0 +1,14 @@
+{
+  "name": "Verse For My Situation",
+  "short_name": "VerseSit",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1877F2",
+  "theme_color": "#1877F2",
+  "description": "Scripture for every situation. 100+ Bible verses across 6 translations. Fully offline.",
+  "icons": [
+    { "src": "PASTE_YOUR_192x192_ICON_URL_HERE", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "PASTE_YOUR_512x512_ICON_URL_HERE", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
