@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" id="dvHtml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#1877F2" id="dvMetaTheme">
+<meta name="description" content="Scripture for every situation. 100+ Bible verses across 6 translations. Fully offline.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="canonical" id="dvCanonical" href="">
+<link rel="manifest" id="dvManifestLink" href="manifest.json">
+<title>Verse For My Situation</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body id="dvBody">
+
+<!-- ===== HEADER ===== -->
+<header class="dv-header" id="dvHeader">
+  <button class="dv-icon-btn" id="dvHamburgerBtn" aria-label="Menu">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+  <div class="dv-app-title">Verse For My Situation</div>
+  <button class="dv-icon-btn" id="dvDotsBtn" aria-label="More options">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+  </button>
+</header>
+
+<!-- ===== OVERLAY ===== -->
+<div class="dv-overlay" id="dvOverlay"></div>
+
+<!-- ===== LEFT SIDEBAR ===== -->
+<aside class="dv-sidebar-left" id="dvLeftSidebar">
+  <div class="dv-sidebar-head">
+    <span>Menu</span>
+    <button class="dv-icon-btn" id="dvCloseLeft" aria-label="Close menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <nav class="dv-sidebar-nav" id="dvLeftNav"></nav>
+</aside>
+
+<!-- ===== RIGHT SIDEBAR ===== -->
+<div class="dv-sidebar-right" id="dvRightSidebar"></div>
+
+<!-- ===== MAIN ===== -->
+<main class="dv-container">
+
+  <!-- PAGE: HOME -->
+  <section class="dv-page dv-page-active" id="dvPageHome">
+
+    <div class="dv-hero">
+      <div class="dv-hero-title">Verse For My Situation</div>
+      <div class="dv-hero-sub">Scripture for every moment. 100+ verses from 6 translations.</div>
+    </div>
+
+    <!-- Situations -->
+    <div class="dv-card">
+      <div class="dv-card-title">Choose Your Situation</div>
+      <div class="dv-situations" id="dvSituations"></div>
+    </div>
+
+    <!-- Translation -->
+    <div class="dv-card">
+      <div class="dv-card-title">Bible Translation</div>
+      <div class="dv-trans-row" id="dvTransRow"></div>
+    </div>
+
+    <!-- Verse Display -->
+    <div id="dvVerseArea">
+      <div class="dv-empty" id="dvEmptyState">
+        <div class="dv-empty-icon">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <div class="dv-empty-text">Select a situation above to receive your verse</div>
+      </div>
+
+      <div class="dv-verse-card dv-hidden" id="dvVerseCard">
+        <div class="dv-verse-label" id="dvVerseSitLabel"></div>
+        <div class="dv-verse-text" id="dvVerseText"></div>
+        <div class="dv-verse-ref" id="dvVerseRef"></div>
+        <div class="dv-verse-trans" id="dvVerseTrans"></div>
+        <div class="dv-verse-note" id="dvVerseNote"></div>
+
+        <div class="dv-btn-row">
+          <div class="dv-share-wrap" id="dvShareWrap">
+            <button class="dv-btn dv-btn-primary" id="dvShareToggleBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+              Share
+            </button>
+          </div>
+
+          <button class="dv-btn dv-btn-secondary" id="dvFavBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="dvFavIcon"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            Save
+          </button>
+
+          <button class="dv-btn dv-btn-secondary" id="dvNextBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 1 12 8 19 1"/><polyline points="5 23 12 16 19 23"/></svg>
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="dv-footer">
+      <div style="font-weight:700;font-size:1rem;color:var(--dv-text);margin-bottom:6px;">Verse For My Situation</div>
+      <div style="margin-bottom:4px;">Rev. Dr. Chris Johnson, PhD</div>
+      <div style="margin-bottom:4px;">DV Biblefirm Christian Tech Ministry</div>
+      <div style="margin-bottom:4px;">CEMLCA &middot; Chris Ministries Online Community</div>
+      <div style="margin-bottom:8px;color:var(--dv-primary);font-weight:600;">Reaching Six Million Souls Across Six Continents</div>
+      <div style="font-size:0.82rem;">&copy; <span id="dvFooterYear"></span> Rev. Dr. Chris Johnson, PhD &middot; All Rights Reserved</div>
+      <div style="font-size:0.82rem;margin-top:4px;">Proprietary Software &middot; DV Biblefirm &middot; Offline Ready</div>
+    </div>
+  </section>
+
+  <!-- PAGE: USER -->
+  <section class="dv-page" id="dvPageUser">
+    <div class="dv-card" style="display:flex; flex-direction:column; align-items:center; gap:18px; padding:24px 18px;">
+      
+      <!-- Circular Photo Placeholder -->
+      <div id="dvUserAvatar" style="width:32dvw; height:32dvw; max-width:140px; max-height:140px; border-radius:50%; background:var(--dv-bg); border:2px dashed var(--dv-border); display:flex; align-items:center; justify-content:center; cursor:pointer; background-size:cover; background-position:center; overflow:hidden;">
+        <span id="dvUserAvatarText" style="font-size:.85rem; color:var(--dv-text-sub); font-weight:700; text-align:center;">Tap to Add Photo</span>
+      </div>
+      <input type="file" id="dvAvatarInput" accept="image/*" style="display:none;">
+
+      <!-- ID and Name Input -->
+      <div style="width:100%; text-align:center;">
+        <div id="dvUserIdDisplay" style="font-size:1.2rem; color:var(--dv-primary); font-weight:700; margin-bottom:10px;">ID: --------</div>
+        <input type="text" id="dvUserNameInput" style="width:100%; padding:14px; border:2px solid var(--dv-border); border-radius:12px; background:var(--dv-bg); color:var(--dv-text); font-size:1.2rem; font-weight:600; font-family:inherit; text-align:center;" placeholder="Write your name here">
+      </div>
+
+      <!-- Dynamic Streak Zone (No static text) -->
+      <div id="dvUserStreakZone" style="width:100%; text-align:center; font-size:1.2rem; font-weight:600; line-height:1.6; color:var(--dv-text);"></div>
+    </div>
+
+    <!-- Activity Engagement Stack -->
+    <div class="dv-card">
+      <div class="dv-card-title" style="font-size:1.2rem;">Your Engagement</div>
+      <div id="dvUserActivityFeed" style="display:flex; flex-direction:column; gap:12px;"></div>
+      <button id="dvUserShowMoreBtn" class="dv-btn dv-btn-secondary" style="width:100%; margin-top:16px; font-size:1.2rem; display:none;">Show More</button>
+    </div>
+  </section>
+  
+  <!-- PAGE: SEARCH -->
+  <section class="dv-page" id="dvPageSearch">
+    <div class="dv-card">
+      <div class="dv-card-title">Search Verses</div>
+      <input type="search" id="dvSearchInput"
+        style="width:100%;padding:12px 16px;border:2px solid var(--dv-border);border-radius:12px;background:var(--dv-bg);color:var(--dv-text);font-size:1rem;font-family:inherit;"
+        placeholder="Search by keyword, reference, or situation...">
+      <div id="dvSearchResults" class="dv-mt8"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== BOTTOM NAV ===== -->
+<nav class="dv-bottom-nav" id="dvBottomNav">
+  <button class="dv-nav-item dv-nav-active" data-dv-page="home" aria-label="Home">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    Home
+  </button>
+  <button class="dv-nav-item" data-dv-page="user" aria-label="User">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    User
+  </button>
+  <button class="dv-nav-item" data-dv-page="search" aria-label="Search">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    Search
+  </button>
+</nav>
+
+<!-- ===== FULLSCREEN MODALS ===== -->
+<div class="dv-modal" id="dvInfoModal">
+  <div class="dv-modal-head">
+    <div class="dv-modal-title" id="dvModalTitle"></div>
+    <button class="dv-icon-btn" id="dvCloseModal" aria-label="Close">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="dv-modal-body" id="dvModalBody"></div>
+</div>
+
+<!-- ===== SHARE MODAL ===== -->
+<div class="dv-share-modal" id="dvShareModal">
+  <div class="dv-share-modal-head">
+    <div class="dv-share-modal-title">Share Verse</div>
+    <button class="dv-icon-btn" id="dvCloseShareModal" aria-label="Close share">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="dv-share-modal-body">
+    <div class="dv-share-verse-preview" id="dvSharePreview">
+      <p id="dvSharePreviewText"></p>
+      <span id="dvSharePreviewRef"></span>
+    </div>
+    <textarea id="dvShareTestimonyInput" style="width:100%; height:110px; padding:14px; border:2px solid var(--dv-border); border-radius:12px; background:var(--dv-bg); color:var(--dv-text); font-size:1.05rem; font-family:inherit; resize:none; outline:none; margin-bottom:20px;" placeholder="Add a personal testimony, thought, or prayer... (optional)"></textarea>
+    <button class="dv-share-option" id="dvShareWa">
+   
+   <svg class="dv-share-icon-wa" width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Share to WhatsApp
+    </button>
+    <button class="dv-share-option" id="dvShareFb">
+      <svg class="dv-share-icon-fb" width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      Share to Facebook
+    </button>
+    <button class="dv-share-option" id="dvShareTw">
+      <svg class="dv-share-icon-tw" width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+      Share to Twitter / X
+    </button>
+    <button class="dv-share-option" id="dvShareNat">
+      <svg class="dv-share-icon-nat" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      Share via Android
+    </button>
+    <button class="dv-share-exit" id="dvShareExit">Exit Share Page</button>
+  </div>
+</div>
+
+<!-- ===== NOTE MODAL ===== -->
+<div class="dv-share-modal" id="dvNoteModal">
+  <div class="dv-share-modal-head">
+    <div class="dv-share-modal-title">Journal Note</div>
+    <button class="dv-icon-btn" id="dvCloseNoteModal" aria-label="Close">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="dv-share-modal-body" style="display:flex; flex-direction:column; gap:16px; height:100%;">
+    <p style="font-size:1rem; color:var(--dv-text-sub); flex-shrink:0;">Write your personal note, prayer, or revelation below:</p>
+    <textarea id="dvNoteInput" style="width:100%; height:92%; padding:16px; border:2px solid var(--dv-border); border-radius:12px; background:var(--dv-bg); color:var(--dv-text); font-size:1.15rem; font-family:inherit; resize:none; outline:none;" placeholder="Type your note here..."></textarea>
+    <button class="dv-btn dv-btn-primary" id="dvSaveNoteBtn" style="width:100%; height:8%; flex-shrink:0; min-height:55px;">Save Note</button>
+  </div>
+</div>
+
+<!-- ===== TOAST ===== -->
+<div class="dv-toast" id="dvToast"></div>
+
+<!-- ===== CORE ===== -->
+<script src="app.js"></script>
+
+<!-- ===== MODULES (optional: delete a file or its line and the app keeps working; add a line to onboard a new module) ===== -->
+<script src="information.js"></script>
+<script src="settings.js"></script>
+<script src="game.js"></script>
+<script src="new-version.js"></script>
+</body>
+</html>
