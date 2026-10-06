@@ -7,7 +7,7 @@
 (function() {
   try {
     /* ===== APP VERSION CONTROL ===== */
-    var dvAppVersion = "1.2";
+    var dvAppVersion = "1.3";
 
     function dvBuildUpdateModal() {
       var wrap = document.createElement('div');
@@ -16,7 +16,7 @@
       wrap.innerHTML =
         '<div class="dv-card" style="width:100%; max-width:340px; text-align:center; padding:28px 24px; margin:0 auto; box-shadow:var(--dv-shadow-lg);">' +
           '<div style="font-size:1.45rem; font-weight:800; color:var(--dv-primary); margin-bottom:12px;">Notice</div>' +
-          '<div style="font-size:1.1rem; color:var(--dv-text); margin-bottom:24px; line-height:1.5;">There\'s a new version, update to use the latest update.</div>' +
+          '<div style="font-size:1.1rem; color:var(--dv-text); margin-bottom:24px; line-height:1.5;">There\'s a new version, update to use the latest version.</div>' +
           '<button class="dv-btn dv-btn-primary" id="dvUpdateOkayBtn" style="width:100%;">Okay</button>' +
         '</div>';
       document.body.appendChild(wrap);
