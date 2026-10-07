@@ -59,31 +59,39 @@
 
     /* ===== HIGHLIGHT COLOURS (gold default, black text on every colour) ===== */
     var dvHlColors = [
-      { n: 'Gold', c: '#FFD700' },
-      { n: 'Green', c: '#8EE59B' },
-      { n: 'Sky', c: '#8FD3FF' },
-      { n: 'Pink', c: '#FFB3D1' },
-      { n: 'Orange', c: '#FFB066' }
+      { n: 'Gold', c: '#FFD700', t: '#000' },
+      { n: 'Light Gold', c: '#FFE88C', t: '#000' },
+      { n: 'Yellow', c: '#FFFF4D', t: '#000' },
+      { n: 'Green', c: '#8EE59B', t: '#000' },
+      { n: 'Sky', c: '#8FD3FF', t: '#000' },
+      { n: 'Pink', c: '#FFB3D1', t: '#000' },
+      { n: 'Orange', c: '#FFB066', t: '#000' },
+      { n: 'Light Dark', c: '#5A5F66', t: '#fff' }
     ];
     var dvHlIdx = 0, dvHlMap = {};
     try { dvHlIdx = Math.min(dvHlColors.length - 1, Math.max(0, +localStorage.getItem('dvBibleColor') || 0)); } catch (e) {}
     try { dvHlMap = JSON.parse(localStorage.getItem('dvBibleHl') || '{}') || {}; } catch (e) { dvHlMap = {}; }
     function dvHlPersist() { try { localStorage.setItem('dvBibleHl', JSON.stringify(dvHlMap)); } catch (e) {} }
     function dvHlCSS() {
-      var s = '', nums = ['.dv-bible-vs.dv-bible-hl b', '.dv-bible-vs.dv-bible-on b'];
+      var s = '.dv-bible-vs.dv-bible-on{background:var(--dv-bg);box-shadow:inset 0 0 0 3px var(--dv-primary)}';
       dvHlColors.forEach(function(k, i) {
-        s += '.dv-bible-vs.dv-bible-c' + i + '{background:' + k.c + ';color:#000;border-left-color:#000}';
-        nums.push('.dv-bible-vs.dv-bible-c' + i + ' b');
+        s += '.dv-bible-vs.dv-bible-c' + i + '{background:' + k.c + ';color:' + k.t + ';border-left-color:' + k.t + '}';
+        s += '.dv-bible-vs.dv-bible-c' + i + ' b{color:' + k.t + '}';
       });
       s += '.dv-bible-vs.dv-bible-hl{background:#FFD700;color:#000;border-left-color:#000}';
-      s += '.dv-bible-vs.dv-bible-on{background:var(--dvHl,#FFD700);color:#000;border-left-color:#000}';
-      s += nums.join(',') + '{color:#000}';
+      s += '.dv-bible-vs.dv-bible-hl b{color:#000}';
       return s;
     }
 
     /* ===== STYLES ===== */
     var css = '' +
       '#dvPageBible [hidden]{display:none !important}' +
+      '#dvPageBible{margin-left:-14px;margin-right:-14px}' +
+      '#dvPageBible .dv-card{border-radius:0;margin-bottom:8px}' +
+      '#dvBibleShareModal .dv-share-modal-body{padding:0 0 20px}' +
+      '#dvBibleShareModal .dv-share-verse-preview{margin:0 0 16px;border-radius:0}' +
+      '#dvBibleShareModal .dv-share-option{border-radius:0;border-left:0;border-right:0;margin-bottom:0}' +
+      '#dvBibleShareModal .dv-share-exit{border-radius:0;border-left:0;border-right:0;margin-top:0}' +
       '.dv-bible-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}' +
       '.dv-bible-sel{flex:1;min-width:0;padding:12px;border:2px solid var(--dv-border);border-radius:12px;background:var(--dv-bg);color:var(--dv-text);font-size:1rem;font-weight:600;font-family:inherit;min-height:52px}' +
       '.dv-bible-a{font-size:1rem;font-weight:700;color:var(--dv-text-sub)}' +
@@ -91,7 +99,7 @@
       '.dv-bible-find{width:100%;padding:12px 16px;border:2px solid var(--dv-border);border-radius:12px;background:var(--dv-bg);color:var(--dv-text);font-size:1rem;font-family:inherit}' +
       '.dv-bible-head{font-size:1.35rem;font-weight:700;color:var(--dv-text);margin-bottom:4px}' +
       '.dv-bible-hint{font-size:1rem;color:var(--dv-text-sub);margin-bottom:12px;line-height:1.5}' +
-      '.dv-bible-text{font-family:Georgia,"Times New Roman",serif;padding-bottom:150px}' +
+      '.dv-bible-text{font-family:Georgia,"Times New Roman",serif;padding-bottom:210px}' +
       '.dv-bible-vs{font-size:var(--dvBs,23px);line-height:1.7;color:var(--dv-text);margin-bottom:6px;padding:4px 8px;border-radius:8px;cursor:pointer;border-left:4px solid transparent}' +
       '.dv-bible-vs b{font-size:1rem;color:var(--dv-primary);margin-right:6px;font-family:Roboto,"Segoe UI",Arial,sans-serif}' +
       '' + dvHlCSS() +
@@ -99,12 +107,12 @@
       '.dv-bible-credit{text-align:center;color:var(--dv-text-sub);font-size:1rem;margin-top:14px;font-family:Roboto,"Segoe UI",Arial,sans-serif}' +
       '.dv-bible-selbar{position:fixed;left:0;right:0;bottom:80px;z-index:160;background:var(--dv-surface);border-top:1px solid var(--dv-border);box-shadow:0 -2px 12px rgba(0,0,0,0.12);padding:10px 12px;display:flex;flex-direction:column;align-items:stretch;gap:8px}' +
       '.dv-bible-selrow{display:flex;align-items:center;gap:8px}' +
-      '.dv-bible-sw{display:flex;gap:10px;margin-left:auto}' +
-      '.dv-bible-swb{width:36px;height:36px;border-radius:50%;border:3px solid transparent;cursor:pointer;padding:0}' +
+      '.dv-bible-sw{display:flex;gap:6px;justify-content:space-between;width:100%}' +
+      '.dv-bible-swb{width:34px;height:34px;flex:none;border-radius:50%;border:3px solid transparent;cursor:pointer;padding:0}' +
       '.dv-bible-swb.dv-bible-act{border-color:var(--dv-text)}' +
-      '.dv-bible-selbar span{flex:none;font-weight:700;font-size:1rem;color:var(--dv-text)}' +
+      '.dv-bible-selbar span{flex:1;font-weight:700;font-size:1rem;color:var(--dv-text)}' +
       '.dv-bible-selbar .dv-btn{flex:1;padding:10px 8px;min-height:48px}' +
-      '.dv-bible-selbar #dvBibleSelClear{flex:none}' +
+      '.dv-bible-selbar #dvBibleSelClear{flex:none;min-height:44px;padding:8px 18px}' +
       '.dv-bible-selbar .dv-btn[hidden]{display:none}' +
       '.dv-bible-selbar[hidden],#dvBibleShImg[hidden]{display:none}';
     var st = document.createElement('style');
@@ -159,13 +167,12 @@
           '</div>' +
         '</div>' +
         '<div class="dv-bible-selbar" id="dvBibleSelBar" hidden>' +
-          '<div class="dv-bible-selrow"><span id="dvBibleSelCount"></span><div class="dv-bible-sw" id="dvBibleSw"></div></div>' +
+          '<div class="dv-bible-selrow"><span id="dvBibleSelCount"></span><button class="dv-btn dv-btn-secondary" id="dvBibleSelClear" aria-label="Close">&#10005;</button></div>' +
+          '<div class="dv-bible-sw" id="dvBibleSw"></div>' +
           '<div class="dv-bible-selrow">' +
             '<button class="dv-btn dv-btn-primary" id="dvBibleSelShare">Share</button>' +
             '<button class="dv-btn dv-btn-secondary" id="dvBibleSelCopy">Copy</button>' +
-            '<button class="dv-btn dv-btn-secondary" id="dvBibleSelSave">Highlight</button>' +
             '<button class="dv-btn dv-btn-secondary" id="dvBibleSelErase" hidden>Erase</button>' +
-            '<button class="dv-btn dv-btn-secondary" id="dvBibleSelClear" aria-label="Clear selection">&#10005;</button>' +
           '</div>' +
         '</div>' +
       '</section>';
@@ -519,18 +526,15 @@
         dvHlIdx = +s.getAttribute('data-dvc');
         try { localStorage.setItem('dvBibleColor', dvHlIdx); } catch (er) {}
         dvBibleSwatches();
-      };
-      dvBibleSwatches();
-      dvQ('#dvBibleSelSave').onclick = function() {
         var key = dvBBi + ':' + dvBCi;
         dvHlMap[key] = dvHlMap[key] || {};
         dvBSel.forEach(function(n) { dvHlMap[key][n] = dvHlIdx; });
         dvHlPersist();
-        dvBSel = [];
         dvBiblePaint();
         dvBibleSelUpdate();
         DV.toast('Highlighted');
       };
+      dvBibleSwatches();
       dvQ('#dvBibleSelErase').onclick = function() {
         var key = dvBBi + ':' + dvBCi;
         if (dvHlMap[key]) {
@@ -538,7 +542,6 @@
           if (!Object.keys(dvHlMap[key]).length) delete dvHlMap[key];
         }
         dvHlPersist();
-        dvBSel = [];
         dvBiblePaint();
         dvBibleSelUpdate();
         DV.toast('Highlight removed');
