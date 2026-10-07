@@ -219,6 +219,7 @@ var dvLeftNavItems = [];
 var dvRightSections = [];
 var dvRoutes = {};
 var dvCurrentRoute = null;
+var dvMatchers = [];
 
 function dvAddLeftItem(item) {
   if (!item || !item.label) return;
@@ -238,6 +239,21 @@ function dvAddNavItem(item) {
   btn.setAttribute('data-dv-page', item.key);
   btn.innerHTML = item.html || '';
   nav.appendChild(btn);
+}
+function dvAddRouteMatcher(fn) {
+  if (typeof fn === 'function') dvMatchers.push(fn);
+}
+function dvAddPage(key, id, def) {
+  def = def || {};
+  var userOpen = def.open;
+  dvPages[key] = id;
+  def.open = function() { dvShowPage(key); if (typeof userOpen === 'function') userOpen(); };
+  dvRegisterRoute(key, def);
+}
+function dvUrl(slug) {
+  slug = dvNormalize(slug);
+  if (dvMode === 'path') return window.location.origin + dvBase + slug;
+  return window.location.origin + window.location.pathname + '#/' + slug;
 }
 function dvRegisterRoute(slug, def) {
   dvRoutes[dvNormalize(slug)] = def || {};
@@ -555,7 +571,7 @@ document.getElementById('dvSearchInput').addEventListener('input', function() {
   for (var k = 0; k < Math.min(matches.length, 20); k++) {
     var m = matches[k];
     html += '<div class="dv-fav-item">' +
-      '<div style="font-size:0.78rem;color:var(--dv-primary);font-weight:700;margin-bottom:4px;">' + m.situation.toUpperCase() + ' &middot; ' + m.verse.translation + '</div>' +
+      '<div style="font-size:1rem;color:var(--dv-primary);font-weight:700;margin-bottom:4px;">' + m.situation.toUpperCase() + ' &middot; ' + m.verse.translation + '</div>' +
       '<div class="dv-fav-text">\u201C' + m.verse.text + '\u201D</div>' +
       '<div class="dv-fav-ref">' + m.verse.ref + '</div>' +
       '</div>';
@@ -564,7 +580,7 @@ document.getElementById('dvSearchInput').addEventListener('input', function() {
 });
 
 /* ===== ROUTER (clean paths; hash fallback) ===== */
-var dvPages = { home:'dvPageHome', user:'dvPageUser', search:'dvPageSearch' };
+var dvPages = { home:'dvPageHome', user:'dvPageUser' };
 
 function dvNormalize(slug) {
   slug = (slug || '').replace(/^\/+|\/+$/g, '');
@@ -604,6 +620,12 @@ function dvUpdateMeta(slug, route) {
 function dvResolve() {
   var slug = dvCurrentSlug();
   var route = dvRoutes[slug];
+  if (!route) {
+    for (var m = 0; m < dvMatchers.length && !route; m++) {
+      try { route = dvMatchers[m](slug) || null; } catch(e) { route = null; }
+    }
+    if (route) dvRoutes[slug] = route;
+  }
   if (!route) { dvNavigate('', true); return; }
   if (dvCurrentRoute !== route) {
     if (dvCurrentRoute && typeof dvCurrentRoute.close === 'function') dvCurrentRoute.close();
@@ -611,7 +633,7 @@ function dvResolve() {
     if (typeof route.open === 'function') route.open();
   }
   dvUpdateMeta(slug, route);
-  var navKey = slug === '' ? 'home' : slug;
+  var navKey = route.navKey || (slug === '' ? 'home' : slug);
   var btns = document.querySelectorAll('.dv-nav-item');
   var hit = false;
   btns.forEach(function(b) { if (b.getAttribute('data-dv-page') === navKey) hit = true; });
@@ -637,7 +659,6 @@ function dvCloseRoute() {
 /* Core page routes */
 dvRegisterRoute('', { open: function() { dvShowPage('home'); } });
 dvRegisterRoute('user', { title: 'User', open: function() { dvShowPage('user'); } });
-dvRegisterRoute('search', { title: 'Search Verses', open: function() { dvShowPage('search'); } });
 
 document.getElementById('dvBottomNav').addEventListener('click', function(e) {
   var btn = e.target.closest ? e.target.closest('.dv-nav-item') : null;
@@ -658,7 +679,11 @@ window.DV = {
   route: dvRegisterRoute,
   addLeftItem: dvAddLeftItem,
   addRightSection: dvAddRightSection,
-  addNavItem: dvAddNavItem
+  addNavItem: dvAddNavItem,
+  addPage: dvAddPage,
+  addRouteMatcher: dvAddRouteMatcher,
+  showPage: dvShowPage,
+  url: dvUrl
 };
 
 /* ===== SERVICE WORKER ===== */
