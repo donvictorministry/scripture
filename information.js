@@ -7,6 +7,70 @@
   try {
     if (!window.DV) return;
 
+    /* ===== DEVELOPER PROFILE ===== */
+    // Paste your photo link between the quotes. Leave empty to show the placeholder.
+    var dvDevPhotoUrl = '';
+    var dvDevPlaceholder = 'data:image/svg+xml;base64,' + btoa('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160"><rect width="160" height="160" fill="#CED0D4"/><circle cx="80" cy="62" r="28" fill="#fff"/><path d="M24 160c0-34 25-56 56-56s56 22 56 56z" fill="#fff"/></svg>');
+
+    var dvDevCSS = '' +
+      '.dv-dev-wrap{position:relative;width:196px;height:196px;margin:4px auto 14px}' +
+      '.dv-gear{position:absolute;inset:0;width:100%;height:100%;animation:dvGearSpin 14s linear infinite}' +
+      '.dv-dev-photo{position:absolute;top:18px;left:18px;width:160px;height:160px;border-radius:50%;object-fit:cover;background:var(--dv-bg)}' +
+      '@keyframes dvGearSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}' +
+      '@media (prefers-reduced-motion:reduce){.dv-gear{animation:none}}' +
+      '.dv-dev-name{font-size:1.5rem;font-weight:800;color:var(--dv-text);text-align:center;line-height:1.3}' +
+      '.dv-dev-role{font-size:1.05rem;font-weight:700;color:var(--dv-primary);text-align:center;margin:6px 0 18px;line-height:1.4}' +
+      '.dv-dev-bio{position:relative;overflow:hidden;font-size:1rem;line-height:1.65rem;color:var(--dv-text-sub)}' +
+      '.dv-dev-bio.dv-clamp{max-height:calc(8 * 1.65rem)}' +
+      '.dv-dev-bio.dv-clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.4rem;background:linear-gradient(to bottom,transparent,var(--dv-surface))}' +
+      '.dv-dev-bio h4{font-size:1.2rem;font-weight:800;color:var(--dv-text);margin:.5rem 0 0;padding-left:10px;border-left:4px solid var(--dv-primary);line-height:1.65rem}' +
+      '.dv-dev-bio p{margin:0 0 .3rem}' +
+      '.dv-dev-bio ul{margin:0 0 .3rem;padding-left:22px}' +
+      '.dv-dev-hl{color:var(--dv-primary);font-weight:700}' +
+      '.dv-dev-more[hidden]{display:none}' +
+      '.dv-dev-more{background:none;border:none;color:var(--dv-primary);font-weight:700;font-size:1rem;font-family:inherit;cursor:pointer;padding:10px 0;display:block;margin:0 auto}';
+    var dvDevStyle = document.createElement('style');
+    dvDevStyle.textContent = dvDevCSS;
+    document.head.appendChild(dvDevStyle);
+
+    function dvDevGear() {
+      var teeth = '';
+      for (var i = 0; i < 24; i++) teeth += '<rect x="-5" y="-99" width="10" height="13" rx="2" transform="rotate(' + (i * 15) + ')"/>';
+      return '<svg class="dv-gear" viewBox="-100 -100 200 200" aria-hidden="true"><g fill="var(--dv-primary)">' + teeth + '<circle r="87" fill="none" stroke="var(--dv-primary)" stroke-width="9"/></g></svg>';
+    }
+    function dvDevHTML() {
+      return '<div class="dv-dev-wrap">' + dvDevGear() +
+          '<img class="dv-dev-photo" id="dvDevPhoto" width="160" height="160" alt="Rev. Dr. Chris Johnson, PhD" src="' + (dvDevPhotoUrl || dvDevPlaceholder) + '" onerror="this.onerror=null;this.src=\'' + dvDevPlaceholder + '\'">' +
+        '</div>' +
+        '<div class="dv-dev-name">Rev. Dr. Chris Johnson, PhD</div>' +
+        '<div class="dv-dev-role">Ordained Minister &middot; Theologian &middot; Technology Innovator</div>' +
+        '<div class="dv-dev-bio dv-clamp" id="dvDevBio">' +
+          '<h4>About</h4>' +
+          '<p>Rev. Dr. Chris Johnson, PhD is an <span class="dv-dev-hl">ordained minister, theologian, and technology innovator</span>.</p>' +
+          '<h4>Founder Of</h4>' +
+          '<ul><li><span class="dv-dev-hl">Biblefirm Christian Tech Ministry</span></li><li><span class="dv-dev-hl">CEMLCA</span> (Centre for Ministry and Leadership Christian Academy)</li><li><span class="dv-dev-hl">Chris Ministries Online Community</span></li></ul>' +
+          '<h4>Mission</h4>' +
+          '<p>Reaching <span class="dv-dev-hl">six million souls across six continents</span> through digital ministry technology.</p>' +
+          '<h4>Approach</h4>' +
+          '<p>Rev. Dr. Johnson builds all applications personally on Android &mdash; believing that the most effective ministry tools are built by those who <span class="dv-dev-hl">understand the ministry firsthand</span>.</p>' +
+          '<h4>Vision</h4>' +
+          '<p>His work <span class="dv-dev-hl">bridges theology and technology</span>, making God\'s Word accessible to every generation.</p>' +
+        '</div>' +
+        '<button class="dv-dev-more" id="dvDevMore" hidden>Show more</button>';
+    }
+    function dvDevInit() {
+      var bio = document.getElementById('dvDevBio'), btn = document.getElementById('dvDevMore');
+      if (!bio || !btn) return;
+      requestAnimationFrame(function() {
+        if (bio.scrollHeight <= bio.clientHeight + 2) { bio.classList.remove('dv-clamp'); btn.hidden = true; return; }
+        btn.hidden = false;
+        btn.onclick = function() {
+          var open = bio.classList.toggle('dv-clamp');
+          btn.textContent = open ? 'Show more' : 'Show less';
+        };
+      });
+    }
+
     /* ===== MODAL CONTENT ===== */
     var dvModalContent = {
 
@@ -17,7 +81,8 @@
 
       about_dev: {
         title: "About Developer",
-        html: "<p><strong>Rev. Dr. Chris Johnson, PhD</strong> is an ordained minister, theologian, and technology innovator. He is the founder of:</p><ul style='padding-left:18px;color:var(--dv-text-sub);line-height:2;'><li>Biblefirm Christian Tech Ministry</li><li>CEMLCA (Centre for Ministry and Leadership Christian Academy)</li><li>Chris Ministries Online Community</li></ul><p>Rev. Dr. Johnson builds all applications personally on Android — believing that the most effective ministry tools are built by those who understand the ministry firsthand.</p><p>His work bridges theology and technology, making God's Word accessible to every generation.</p>"
+        html: dvDevHTML(),
+        onOpen: dvDevInit
       },
 
       copyright: {
@@ -77,7 +142,7 @@
         var data = dvModalContent[item.key];
         DV.route(item.route, {
           title: data.title,
-          open: function() { DV.openModal(data.title, data.html); },
+          open: function() { DV.openModal(data.title, data.html, data.onOpen); },
           close: function() { DV.closeModal(); }
         });
       }
