@@ -7,7 +7,7 @@
 (function() {
   try {
     /* ===== APP VERSION CONTROL ===== */
-    var dvAppVersion = "1.8";
+    var dvAppVersion = "1.9";
 
     function dvBuildUpdateModal() {
       var wrap = document.createElement('div');
