@@ -99,7 +99,7 @@
       '.dv-bible-find{width:100%;padding:12px 16px;border:2px solid var(--dv-border);border-radius:12px;background:var(--dv-bg);color:var(--dv-text);font-size:1rem;font-family:inherit}' +
       '.dv-bible-head{font-size:1.35rem;font-weight:700;color:var(--dv-text);margin-bottom:4px}' +
       '.dv-bible-hint{font-size:1rem;color:var(--dv-text-sub);margin-bottom:12px;line-height:1.5}' +
-      '.dv-bible-text{font-family:Georgia,"Times New Roman",serif;padding-bottom:210px}' +
+      '.dv-bible-text{font-family:Georgia,"Times New Roman",serif;padding-bottom:0}' +
       '.dv-bible-vs{font-size:var(--dvBs,23px);line-height:1.7;color:var(--dv-text);margin-bottom:6px;padding:4px 8px;border-radius:8px;cursor:pointer;border-left:4px solid transparent}' +
       '.dv-bible-vs b{font-size:1rem;color:var(--dv-primary);margin-right:6px;font-family:Roboto,"Segoe UI",Arial,sans-serif}' +
       '' + dvHlCSS() +
@@ -262,7 +262,7 @@
         dvBHl = 0;
         if (el) { el.classList.add('dv-bible-hl'); el.scrollIntoView({ block: 'center' }); return; }
       }
-      window.scrollTo(0, 0);
+      var dvMain = document.querySelector('main.dv-container'); if (dvMain) dvMain.scrollTop = 0;
     }
 
     function dvBiblePaint() {
@@ -356,6 +356,7 @@
       var bar = dvQ('#dvBibleSelBar');
       if (!bar) return;
       bar.hidden = !dvBSel.length;
+      dvQ('#dvPageBible').style.paddingBottom = dvBSel.length ? bar.offsetHeight + 'px' : '0px';
       dvQ('#dvBibleSelCount').textContent = dvBSel.length + ' selected';
       var m = dvHlMap[dvBBi + ':' + dvBCi] || {};
       dvQ('#dvBibleSelErase').hidden = !dvBSel.some(function(n) { return m[n] !== undefined; });
