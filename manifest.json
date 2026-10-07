@@ -1,6 +1,6 @@
 {
   "name": "Verse For My Situation",
-  "short_name": "VerseSit",
+  "short_name": "Bible Verse",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
