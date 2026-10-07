@@ -44,14 +44,13 @@
 [data-dv-theme="amber"]  { --dv-primary:#D97706; --dv-primary-dark:#B45309; --dv-primary-hover:#C46D06; }
 [data-dv-theme="slate"]  { --dv-primary:#475569; --dv-primary-dark:#334155; --dv-primary-hover:#3F4D5E; }
 
-html, body { min-height:100dvh; font-size:19.3px; }
+html, body { height:100dvh; overflow:hidden; font-size:19.3px; }
 body {
   font-family: Roboto, 'Segoe UI', Arial, sans-serif;
   background: var(--dv-bg);
   color: var(--dv-text);
-  min-height: 100dvh;
-  overflow-x: hidden;
-  padding-bottom: 110px;
+  height: 100dvh;
+  overflow: hidden;
   transition: background 0.25s, color 0.25s;
 }
 
@@ -60,7 +59,7 @@ body {
   background: var(--dv-surface);
   padding: 14px 12px;
   box-shadow: var(--dv-shadow);
-  position: sticky; top: 0; z-index: 200;
+  position: fixed; top: 0; left: 0; right: 0; height: 78px; z-index: 200;
   display: flex; align-items: center; justify-content: space-between; gap: 8px;
 }
 .dv-icon-btn {
@@ -222,7 +221,12 @@ body {
 .dv-contact-btn.dv-fb     { background: #1877F2; }
 
 /* ===== MAIN CONTAINER ===== */
-.dv-container { max-width: 600px; margin: 0 auto; padding: 14px; }
+.dv-container {
+  position: fixed; top: 78px; bottom: 80px; left: 0; right: 0;
+  max-width: 600px; margin: 0 auto; padding: 14px;
+  overflow-y: auto; overflow-x: hidden;
+  overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
+}
 
 /* ===== HERO BANNER ===== */
 .dv-hero {
@@ -261,7 +265,7 @@ body {
 
 /* ===== TRANSLATION SELECTOR ===== */
 .dv-trans-row {
-  display: flex; gap: 8px; overflow-x: auto;
+  display: flex; flex-wrap: wrap; gap: 8px; overflow-x: hidden;
   padding-bottom: 4px; margin-bottom: 14px;
   scrollbar-width: none;
 }
