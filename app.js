@@ -605,6 +605,8 @@ function dvRestoreFrom404() {
   }
 }
 function dvShowPage(page) {
+  var dvScroller = document.querySelector('main.dv-container');
+  if (dvScroller) dvScroller.scrollTop = 0;
   Object.keys(dvPages).forEach(function(k) {
     document.getElementById(dvPages[k]).classList.toggle('dv-page-active', k === page);
   });
