@@ -86,7 +86,9 @@
     /* ===== STYLES ===== */
     var css = '' +
       '#dvPageBible [hidden]{display:none !important}' +
-      '#dvPageBible{margin-left:-14px;margin-right:-14px}' +
+      '#dvPageBible{margin:0 -14px -14px}' +
+      '#dvBibleRead .dv-card:last-child{margin-bottom:0}' +
+      '#dvBibleFoot{margin-bottom:0}' +
       '#dvPageBible .dv-card{border-radius:0;margin-bottom:8px}' +
       '#dvBibleShareModal .dv-share-modal-body{padding:0 0 20px}' +
       '#dvBibleShareModal .dv-share-verse-preview{margin:0 0 16px;border-radius:0}' +
@@ -280,6 +282,11 @@
       document.documentElement.style.setProperty('--dvHl', dvHlColors[dvHlIdx].c);
     }
 
+    function dvBibleLeave() {
+      dvBSel = [];
+      dvBibleSelUpdate();
+    }
+
     function dvBibleStep(dir) {
       var bi = dvBBi, ci = dvBCi + dir;
       if (ci < 0) { bi--; if (bi < 0) return; ci = dvChapCounts[bi] - 1; }
@@ -356,7 +363,8 @@
       var bar = dvQ('#dvBibleSelBar');
       if (!bar) return;
       bar.hidden = !dvBSel.length;
-      dvQ('#dvPageBible').style.paddingBottom = dvBSel.length ? bar.offsetHeight + 'px' : '0px';
+      var dvMainBox = document.querySelector('main.dv-container');
+      if (dvMainBox) dvMainBox.style.bottom = dvBSel.length ? (80 + bar.offsetHeight) + 'px' : '';
       dvQ('#dvBibleSelCount').textContent = dvBSel.length + ' selected';
       var m = dvHlMap[dvBBi + ':' + dvBCi] || {};
       dvQ('#dvBibleSelErase').hidden = !dvBSel.some(function(n) { return m[n] !== undefined; });
@@ -588,7 +596,8 @@
       title: 'King James Bible',
       description: 'Read the King James Bible free, all 66 books, offline. Share any book or chapter with a link.',
       navKey: 'bible',
-      open: function() { dvBibleOpen(); }
+      open: function() { dvBibleOpen(); },
+      close: dvBibleLeave
     });
 
     // Deep links: /matthew (book) and /john-3 (chapter)
@@ -608,7 +617,8 @@
         title: label + ' (KJV)',
         description: 'Read ' + label + ' in the King James Bible, free and offline. Share it with a link.',
         navKey: 'bible',
-        open: function() { DV.showPage('bible'); dvBibleOpen(bi, ci, true); }
+        open: function() { DV.showPage('bible'); dvBibleOpen(bi, ci, true); },
+        close: dvBibleLeave
       };
     });
   } catch (e) {}
