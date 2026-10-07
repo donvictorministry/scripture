@@ -3,7 +3,7 @@
    Independent module: delete this file and the app keeps working online.
    Files that do not exist are skipped silently when caching.
    ===================================================================== */
-var DV_CACHE = 'dv-verse-v3.5';
+var DV_CACHE = 'dv-verse-v3.6';
 var DV_FILES = [
   './',
   'index.html',
