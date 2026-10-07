@@ -784,29 +784,7 @@
         <div class="dvg-cert-achievement">For completing the <strong>JESUS Slide Puzzle</strong> and earning the faith badge of</div>
         <div class="dvg-cert-badge-label" id="dvg-cert-badge">Believer</div>
         <div class="dvg-cert-rule"></div>
-        <div class="dvg-cert-stats-row">
-          <div class="dvg-cert-stat-col">
-            <div class="dvg-cert-stat-val" id="dvg-cert-wins">0</div>
-            <div class="dvg-cert-stat-lbl">Total Wins</div>
-          </div>
-          <div class="dvg-cert-stat-col">
-            <div class="dvg-cert-stat-val" id="dvg-cert-moves">--</div>
-            <div class="dvg-cert-stat-lbl">Best Moves</div>
-          </div>
-          <div class="dvg-cert-stat-col">
-            <div class="dvg-cert-stat-val" id="dvg-cert-time">--</div>
-            <div class="dvg-cert-stat-lbl">Best Time</div>
-          </div>
-        </div>
-        <div class="dvg-cert-rule"></div>
-        <div class="dvg-cert-verse-txt" id="dvg-cert-verse"></div>
-        <div class="dvg-cert-rule-dbl"></div>
-        <div class="dvg-cert-issuer" id="dvg-cert-issuer">Issued by: YOUR_NAME</div>
-        <div class="dvg-cert-contact" id="dvg-cert-contact">
-          YOUR_MINISTRY_NAME<br>
-          WhatsApp: YOUR_WHATSAPP_NUMBER<br>
-          Email: YOUR_EMAIL
-        </div>
+        <div class="dvg-cert-issuer" id="dvg-cert-issuer">Presented by: Rev. Chris Johnson, PhD</div>
         <div class="dvg-cert-date" id="dvg-cert-date"></div>
       </div>
 
@@ -1167,13 +1145,7 @@
     G('dvg-cert-ministry').textContent  = CFG.MINISTRY;
     G('dvg-cert-player').textContent    = name;
     G('dvg-cert-badge').textContent     = badge;
-    G('dvg-cert-wins').textContent      = S.wins;
-    G('dvg-cert-moves').textContent     = S.bestMoves!==null?S.bestMoves:'--';
-    G('dvg-cert-time').textContent      = S.bestSec!==null?fmt(S.bestSec):'--';
-    G('dvg-cert-verse').textContent     = '"'+verse.text+'" — '+verse.ref;
-    G('dvg-cert-issuer').textContent    = 'Issued by: '+CFG.ISSUER;
-    G('dvg-cert-contact').innerHTML     = CFG.MINISTRY+'<br>WhatsApp: '+CFG.WHATSAPP+'<br>Email: '+CFG.EMAIL;
-    G('dvg-cert-date').textContent      = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+    G('dvg-cert-date').textContent      = 'Date issued: ' + new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
   }
 
   function shareMsg(){
