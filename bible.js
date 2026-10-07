@@ -57,6 +57,30 @@
       });
     }
 
+    /* ===== HIGHLIGHT COLOURS (gold default, black text on every colour) ===== */
+    var dvHlColors = [
+      { n: 'Gold', c: '#FFD700' },
+      { n: 'Green', c: '#8EE59B' },
+      { n: 'Sky', c: '#8FD3FF' },
+      { n: 'Pink', c: '#FFB3D1' },
+      { n: 'Orange', c: '#FFB066' }
+    ];
+    var dvHlIdx = 0, dvHlMap = {};
+    try { dvHlIdx = Math.min(dvHlColors.length - 1, Math.max(0, +localStorage.getItem('dvBibleColor') || 0)); } catch (e) {}
+    try { dvHlMap = JSON.parse(localStorage.getItem('dvBibleHl') || '{}') || {}; } catch (e) { dvHlMap = {}; }
+    function dvHlPersist() { try { localStorage.setItem('dvBibleHl', JSON.stringify(dvHlMap)); } catch (e) {} }
+    function dvHlCSS() {
+      var s = '', nums = ['.dv-bible-vs.dv-bible-hl b', '.dv-bible-vs.dv-bible-on b'];
+      dvHlColors.forEach(function(k, i) {
+        s += '.dv-bible-vs.dv-bible-c' + i + '{background:' + k.c + ';color:#000;border-left-color:#000}';
+        nums.push('.dv-bible-vs.dv-bible-c' + i + ' b');
+      });
+      s += '.dv-bible-vs.dv-bible-hl{background:#FFD700;color:#000;border-left-color:#000}';
+      s += '.dv-bible-vs.dv-bible-on{background:var(--dvHl,#FFD700);color:#000;border-left-color:#000}';
+      s += nums.join(',') + '{color:#000}';
+      return s;
+    }
+
     /* ===== STYLES ===== */
     var css = '' +
       '#dvPageBible [hidden]{display:none !important}' +
@@ -67,15 +91,21 @@
       '.dv-bible-find{width:100%;padding:12px 16px;border:2px solid var(--dv-border);border-radius:12px;background:var(--dv-bg);color:var(--dv-text);font-size:1rem;font-family:inherit}' +
       '.dv-bible-head{font-size:1.35rem;font-weight:700;color:var(--dv-text);margin-bottom:4px}' +
       '.dv-bible-hint{font-size:1rem;color:var(--dv-text-sub);margin-bottom:12px;line-height:1.5}' +
-      '.dv-bible-text{font-family:Georgia,"Times New Roman",serif;padding-bottom:70px}' +
+      '.dv-bible-text{font-family:Georgia,"Times New Roman",serif;padding-bottom:150px}' +
       '.dv-bible-vs{font-size:var(--dvBs,23px);line-height:1.7;color:var(--dv-text);margin-bottom:6px;padding:4px 8px;border-radius:8px;cursor:pointer;border-left:4px solid transparent}' +
       '.dv-bible-vs b{font-size:1rem;color:var(--dv-primary);margin-right:6px;font-family:Roboto,"Segoe UI",Arial,sans-serif}' +
-      '.dv-bible-vs.dv-bible-on,.dv-bible-vs.dv-bible-hl{background:var(--dv-bg);border-left-color:var(--dv-primary)}' +
+      '' + dvHlCSS() +
       '.dv-bible-ref{display:block;font-size:1rem;font-weight:700;color:var(--dv-primary);font-family:Roboto,"Segoe UI",Arial,sans-serif}' +
       '.dv-bible-credit{text-align:center;color:var(--dv-text-sub);font-size:1rem;margin-top:14px;font-family:Roboto,"Segoe UI",Arial,sans-serif}' +
-      '.dv-bible-selbar{position:fixed;left:0;right:0;bottom:80px;z-index:160;background:var(--dv-surface);border-top:1px solid var(--dv-border);box-shadow:0 -2px 12px rgba(0,0,0,0.12);padding:10px 12px;display:flex;align-items:center;gap:8px}' +
-      '.dv-bible-selbar span{flex:1;font-weight:700;font-size:1rem;color:var(--dv-text)}' +
-      '.dv-bible-selbar .dv-btn{flex:none;padding:10px 14px;min-height:48px}' +
+      '.dv-bible-selbar{position:fixed;left:0;right:0;bottom:80px;z-index:160;background:var(--dv-surface);border-top:1px solid var(--dv-border);box-shadow:0 -2px 12px rgba(0,0,0,0.12);padding:10px 12px;display:flex;flex-direction:column;align-items:stretch;gap:8px}' +
+      '.dv-bible-selrow{display:flex;align-items:center;gap:8px}' +
+      '.dv-bible-sw{display:flex;gap:10px;margin-left:auto}' +
+      '.dv-bible-swb{width:36px;height:36px;border-radius:50%;border:3px solid transparent;cursor:pointer;padding:0}' +
+      '.dv-bible-swb.dv-bible-act{border-color:var(--dv-text)}' +
+      '.dv-bible-selbar span{flex:none;font-weight:700;font-size:1rem;color:var(--dv-text)}' +
+      '.dv-bible-selbar .dv-btn{flex:1;padding:10px 8px;min-height:48px}' +
+      '.dv-bible-selbar #dvBibleSelClear{flex:none}' +
+      '.dv-bible-selbar .dv-btn[hidden]{display:none}' +
       '.dv-bible-selbar[hidden],#dvBibleShImg[hidden]{display:none}';
     var st = document.createElement('style');
     st.textContent = css;
@@ -129,10 +159,14 @@
           '</div>' +
         '</div>' +
         '<div class="dv-bible-selbar" id="dvBibleSelBar" hidden>' +
-          '<span id="dvBibleSelCount"></span>' +
-          '<button class="dv-btn dv-btn-primary" id="dvBibleSelShare">Share</button>' +
-          '<button class="dv-btn dv-btn-secondary" id="dvBibleSelCopy">Copy</button>' +
-          '<button class="dv-btn dv-btn-secondary" id="dvBibleSelClear" aria-label="Clear selection">&#10005;</button>' +
+          '<div class="dv-bible-selrow"><span id="dvBibleSelCount"></span><div class="dv-bible-sw" id="dvBibleSw"></div></div>' +
+          '<div class="dv-bible-selrow">' +
+            '<button class="dv-btn dv-btn-primary" id="dvBibleSelShare">Share</button>' +
+            '<button class="dv-btn dv-btn-secondary" id="dvBibleSelCopy">Copy</button>' +
+            '<button class="dv-btn dv-btn-secondary" id="dvBibleSelSave">Highlight</button>' +
+            '<button class="dv-btn dv-btn-secondary" id="dvBibleSelErase" hidden>Erase</button>' +
+            '<button class="dv-btn dv-btn-secondary" id="dvBibleSelClear" aria-label="Clear selection">&#10005;</button>' +
+          '</div>' +
         '</div>' +
       '</section>';
 
@@ -208,6 +242,7 @@
         h += '<p class="dv-bible-vs" id="dvBVs' + dvBList[i].n + '" data-dvv="' + dvBList[i].n + '"><b>' + dvBList[i].n + '</b>' + dvEsc(dvBList[i].t) + '</p>';
       }
       dvQ('#dvBibleText').innerHTML = h;
+      dvBiblePaint();
       dvQ('#dvBibleHead').textContent = dvBookNames[dvBBi] + ' ' + (dvBCi + 1);
       dvQ('#dvBibleTip').hidden = false;
       dvQ('#dvBibleFoot').hidden = false;
@@ -221,6 +256,21 @@
         if (el) { el.classList.add('dv-bible-hl'); el.scrollIntoView({ block: 'center' }); return; }
       }
       window.scrollTo(0, 0);
+    }
+
+    function dvBiblePaint() {
+      var m = dvHlMap[dvBBi + ':' + dvBCi] || {};
+      document.querySelectorAll('#dvBibleText .dv-bible-vs[data-dvv]').forEach(function(p) {
+        for (var i = 0; i < dvHlColors.length; i++) p.classList.remove('dv-bible-c' + i);
+        var c = m[p.getAttribute('data-dvv')];
+        if (c !== undefined) p.classList.add('dv-bible-c' + c);
+      });
+    }
+    function dvBibleSwatches() {
+      document.querySelectorAll('#dvBibleSw .dv-bible-swb').forEach(function(s, i) {
+        s.classList.toggle('dv-bible-act', i === dvHlIdx);
+      });
+      document.documentElement.style.setProperty('--dvHl', dvHlColors[dvHlIdx].c);
     }
 
     function dvBibleStep(dir) {
@@ -300,6 +350,8 @@
       if (!bar) return;
       bar.hidden = !dvBSel.length;
       dvQ('#dvBibleSelCount').textContent = dvBSel.length + ' selected';
+      var m = dvHlMap[dvBBi + ':' + dvBCi] || {};
+      dvQ('#dvBibleSelErase').hidden = !dvBSel.some(function(n) { return m[n] !== undefined; });
       document.querySelectorAll('#dvBibleText .dv-bible-vs[data-dvv]').forEach(function(p) {
         p.classList.toggle('dv-bible-on', dvBSel.indexOf(+p.getAttribute('data-dvv')) !== -1);
       });
@@ -457,6 +509,39 @@
       dvQ('#dvBibleSelCopy').onclick = function() {
         var c = dvBibleCtxVerses();
         dvBibleCopy(c.text + '\n\n' + DV.url(c.slug), 'Verse copied');
+      };
+      dvQ('#dvBibleSw').innerHTML = dvHlColors.map(function(k, i) {
+        return '<button class="dv-bible-swb" data-dvc="' + i + '" style="background:' + k.c + ';" aria-label="' + k.n + ' highlight"></button>';
+      }).join('');
+      dvQ('#dvBibleSw').onclick = function(e) {
+        var s = e.target.closest('.dv-bible-swb');
+        if (!s) return;
+        dvHlIdx = +s.getAttribute('data-dvc');
+        try { localStorage.setItem('dvBibleColor', dvHlIdx); } catch (er) {}
+        dvBibleSwatches();
+      };
+      dvBibleSwatches();
+      dvQ('#dvBibleSelSave').onclick = function() {
+        var key = dvBBi + ':' + dvBCi;
+        dvHlMap[key] = dvHlMap[key] || {};
+        dvBSel.forEach(function(n) { dvHlMap[key][n] = dvHlIdx; });
+        dvHlPersist();
+        dvBSel = [];
+        dvBiblePaint();
+        dvBibleSelUpdate();
+        DV.toast('Highlighted');
+      };
+      dvQ('#dvBibleSelErase').onclick = function() {
+        var key = dvBBi + ':' + dvBCi;
+        if (dvHlMap[key]) {
+          dvBSel.forEach(function(n) { delete dvHlMap[key][n]; });
+          if (!Object.keys(dvHlMap[key]).length) delete dvHlMap[key];
+        }
+        dvHlPersist();
+        dvBSel = [];
+        dvBiblePaint();
+        dvBibleSelUpdate();
+        DV.toast('Highlight removed');
       };
       dvQ('#dvBibleSelClear').onclick = function() { dvBSel = []; dvBibleSelUpdate(); };
       dvQ('#dvBibleShareClose').onclick = dvBibleShareClose;
