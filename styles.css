@@ -269,7 +269,7 @@ body {
 .dv-trans-btn {
   flex-shrink: 0; background: var(--dv-bg);
   border: 2px solid var(--dv-border); border-radius: 22px;
-  padding: 8px 15px; font-size: 0.95rem; font-weight: 700;
+  padding: 8px 15px; font-size: 1rem; font-weight: 700;
   color: var(--dv-text-sub); cursor: pointer; font-family: inherit;
   min-height: 44px; transition: background 0.15s, border-color 0.15s, color 0.15s;
 }
@@ -283,7 +283,7 @@ body {
   border-left: 5px solid var(--dv-primary);
 }
 .dv-verse-label {
-  font-size: 0.82rem; font-weight: 700; text-transform: uppercase;
+  font-size: 1rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: 0.06em; color: var(--dv-primary);
   margin-bottom: 12px;
 }
@@ -297,11 +297,11 @@ body {
   margin-bottom: 8px;
 }
 .dv-verse-trans {
-  font-size: 0.85rem; color: var(--dv-text-sub);
+  font-size: 1rem; color: var(--dv-text-sub);
   margin-bottom: 12px;
 }
 .dv-verse-note {
-  font-size: 0.95rem; color: var(--dv-text-sub);
+  font-size: 1rem; color: var(--dv-text-sub);
   padding-top: 12px; border-top: 1px solid var(--dv-border);
   line-height: 1.55;
 }
@@ -350,7 +350,7 @@ body {
   border-left: 4px solid var(--dv-primary);
 }
 .dv-share-verse-preview p { font-size: 1rem; font-style: italic; color: var(--dv-text); line-height: 1.6; margin-bottom: 8px; }
-.dv-share-verse-preview span { font-size: 0.9rem; font-weight: 700; color: var(--dv-primary); }
+.dv-share-verse-preview span { font-size: 1rem; font-weight: 700; color: var(--dv-primary); }
 .dv-share-option {
   width: 100%; background: var(--dv-bg); border: 2px solid var(--dv-border);
   display: flex; align-items: center; gap: 17px;
@@ -388,7 +388,7 @@ body {
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   gap: 4px; color: var(--dv-text-sub);
-  cursor: pointer; font-size: 0.84rem; font-weight: 600;
+  cursor: pointer; font-size: 1rem; font-weight: 600;
   font-family: inherit; min-height: 52px;
   transition: color 0.15s;
 }
@@ -402,7 +402,7 @@ body {
 .dv-footer {
   background: var(--dv-surface); border-radius: var(--dv-radius);
   padding: 16px; margin-top: 8px; margin-bottom: 16px;
-  text-align: center; font-size: 0.82rem;
+  text-align: center; font-size: 1rem;
   color: var(--dv-text-sub); box-shadow: var(--dv-shadow);
 }
 
@@ -438,12 +438,12 @@ body {
   box-shadow: var(--dv-shadow);
 }
 .dv-fav-text { font-size: 1rem; line-height: 1.6; color: var(--dv-text); margin-bottom: 8px; font-style: italic; }
-.dv-fav-ref  { font-size: 0.9rem; font-weight: 700; color: var(--dv-primary); }
+.dv-fav-ref  { font-size: 1rem; font-weight: 700; color: var(--dv-primary); }
 
 /* COPYRIGHT NOTICE */
 .dv-copy-box {
   border: 2px solid var(--dv-primary); border-radius: 10px;
-  padding: 14px; margin-bottom: 16px; font-size: 0.92rem;
+  padding: 14px; margin-bottom: 16px; font-size: 1rem;
   color: var(--dv-text-sub); line-height: 1.6;
 }
 
