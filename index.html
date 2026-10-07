@@ -7,15 +7,13 @@
 <meta name="description" content="Scripture for every situation. 100+ Bible verses across 6 translations. Fully offline.">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Verse For My Situation">
+<meta property="og:description" content="Scripture for every situation. 100+ Bible verses across 6 translations. Fully offline.">
+<meta name="twitter:card" content="summary">
 <link rel="canonical" id="dvCanonical" href="">
 <link rel="manifest" id="dvManifestLink" href="manifest.json">
 <title>Verse For My Situation</title>
-<meta property="og:title" content="Verse For My Situation">
-<meta property="og:description" content="Scripture for every situation. 100+ Bible verses across 6 translations. Fully offline. Find verses that fit your life.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://username.github.io/repo-name/">
-<meta property="og:image" content="https://donvictorministry.github.io/assets-/Screenshot_20261007-004948.png/og-image.png">
-
 <link rel="stylesheet" href="styles.css">
 </head>
 <body id="dvBody">
@@ -57,6 +55,15 @@
     <div class="dv-hero">
       <div class="dv-hero-title">Verse For My Situation</div>
       <div class="dv-hero-sub">Scripture for every moment. 100+ verses from 6 translations.</div>
+    </div>
+
+    <!-- Search -->
+    <div class="dv-card">
+      <div class="dv-card-title">Search Verses</div>
+      <input type="search" id="dvSearchInput"
+        style="width:100%;padding:12px 16px;border:2px solid var(--dv-border);border-radius:12px;background:var(--dv-bg);color:var(--dv-text);font-size:1rem;font-family:inherit;"
+        placeholder="Search by keyword, reference, or situation...">
+      <div id="dvSearchResults" class="dv-mt8"></div>
     </div>
 
     <!-- Situations -->
@@ -114,8 +121,8 @@
       <div style="margin-bottom:4px;">DV Biblefirm Christian Tech Ministry</div>
       <div style="margin-bottom:4px;">CEMLCA &middot; Chris Ministries Online Community</div>
       <div style="margin-bottom:8px;color:var(--dv-primary);font-weight:600;">Reaching Six Million Souls Across Six Continents</div>
-      <div style="font-size:0.82rem;">&copy; <span id="dvFooterYear"></span> Rev. Dr. Chris Johnson, PhD &middot; All Rights Reserved</div>
-      <div style="font-size:0.82rem;margin-top:4px;">Proprietary Software &middot; DV Biblefirm &middot; Offline Ready</div>
+      <div style="font-size:1rem;">&copy; <span id="dvFooterYear"></span> Rev. Dr. Chris Johnson, PhD &middot; All Rights Reserved</div>
+      <div style="font-size:1rem;margin-top:4px;">Proprietary Software &middot; DV Biblefirm &middot; Offline Ready</div>
     </div>
   </section>
 
@@ -125,7 +132,7 @@
       
       <!-- Circular Photo Placeholder -->
       <div id="dvUserAvatar" style="width:32dvw; height:32dvw; max-width:140px; max-height:140px; border-radius:50%; background:var(--dv-bg); border:2px dashed var(--dv-border); display:flex; align-items:center; justify-content:center; cursor:pointer; background-size:cover; background-position:center; overflow:hidden;">
-        <span id="dvUserAvatarText" style="font-size:.85rem; color:var(--dv-text-sub); font-weight:700; text-align:center;">Tap to Add Photo</span>
+        <span id="dvUserAvatarText" style="font-size:1rem; color:var(--dv-text-sub); font-weight:700; text-align:center;">Tap to Add Photo</span>
       </div>
       <input type="file" id="dvAvatarInput" accept="image/*" style="display:none;">
 
@@ -146,18 +153,6 @@
       <button id="dvUserShowMoreBtn" class="dv-btn dv-btn-secondary" style="width:100%; margin-top:16px; font-size:1.2rem; display:none;">Show More</button>
     </div>
   </section>
-  
-  <!-- PAGE: SEARCH -->
-  <section class="dv-page" id="dvPageSearch">
-    <div class="dv-card">
-      <div class="dv-card-title">Search Verses</div>
-      <input type="search" id="dvSearchInput"
-        style="width:100%;padding:12px 16px;border:2px solid var(--dv-border);border-radius:12px;background:var(--dv-bg);color:var(--dv-text);font-size:1rem;font-family:inherit;"
-        placeholder="Search by keyword, reference, or situation...">
-      <div id="dvSearchResults" class="dv-mt8"></div>
-    </div>
-  </section>
-
 </main>
 
 <!-- ===== BOTTOM NAV ===== -->
@@ -169,10 +164,6 @@
   <button class="dv-nav-item" data-dv-page="user" aria-label="User">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
     User
-  </button>
-  <button class="dv-nav-item" data-dv-page="search" aria-label="Search">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    Search
   </button>
 </nav>
 
@@ -246,6 +237,7 @@
 <!-- ===== MODULES (optional: delete a file or its line and the app keeps working; add a line to onboard a new module) ===== -->
 <script src="information.js"></script>
 <script src="settings.js"></script>
+<script src="bible.js"></script>
 <script src="game.js"></script>
 <script src="new-version.js"></script>
 </body>
