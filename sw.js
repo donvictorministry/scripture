@@ -3,7 +3,7 @@
    Independent module: delete this file and the app keeps working online.
    Files that do not exist are skipped silently when caching.
    ===================================================================== */
-var DV_CACHE = 'dv-verse-v2.3';
+var DV_CACHE = 'dv-verse-v3';
 var DV_FILES = [
   './',
   'index.html',
@@ -11,6 +11,7 @@ var DV_FILES = [
   'app.js',
   'information.js',
   'settings.js',
+  'bible.js',
   'game.js',
   'new-version.js',
   'manifest.json'
